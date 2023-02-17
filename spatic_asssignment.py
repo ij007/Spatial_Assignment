@@ -69,5 +69,11 @@ df = pd.read_csv('assignment_data.csv')
 is_similar = pd.DataFrame([0]*len(df), columns=['is_similar'])
 df = pd.concat([df, (is_similar)], axis=1)
 
+for i in range(1, len(df)):
+    d1 = (df['latitude'][i-1], df['longitude'][i-1])
+    d2 = (df['latitude'][i], df['longitude'][i])
+    if is_similar_name(df['name'][i-1], df['name'][i]) and Distance(d1, d2)<=0.2:
+        df['is_similar'][i-1] = df['is_similar'][i] = 1
+
 # Write the modified dataframe to a new CSV file
 df.to_csv('output.csv')
